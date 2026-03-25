@@ -95,8 +95,8 @@ chmod +x *.sh
 
 Open each script file and replace:
 ```bash
-STUDENT_NAME="[Harshvardhan Borgohain]"        # → your actual name
-ROLL_NUMBER="[24BAC10024]"  # → your actual roll number
+STUDENT_NAME = "Harshvardhan Borgohain"        # → your actual name
+ROLL_NUMBER = [24BAC10024]  # → your actual roll number
 ```
 
 ---
