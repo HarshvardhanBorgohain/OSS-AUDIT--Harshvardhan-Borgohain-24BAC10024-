@@ -1,0 +1,108 @@
+#!/bin/bash
+# =============================================================================
+# Script 3: Disk and Permission Auditor
+# Author: [Your Name] | Roll: [Your Roll Number]
+# Course: Open Source Software (NGMC) | OSS Capstone Project
+# Software Audited: Git
+# Description: Loops through key Linux directories and reports permissions,
+#              owner, and disk usage. Also audits Git-specific directories.
+# =============================================================================
+
+# --- List of important Linux system directories to audit ---
+DIRS=("/etc" "/var/log" "/home" "/usr/bin" "/tmp" "/usr/share" "/var")
+
+echo "============================================================"
+echo "           DISK AND PERMISSION AUDITOR                     "
+echo "             Software Audited: Git                         "
+echo "============================================================"
+echo ""
+printf "%-22s %-28s %-8s\n" "Directory" "Permissions  Owner  Group" "Size"
+echo "--------------------------------------------------------------------"
+
+# --- For loop: iterate over each directory in the DIRS array ---
+for DIR in "${DIRS[@]}"; do
+
+    # Check if the directory actually exists on this system
+    if [ -d "$DIR" ]; then
+
+        # ls -ld gives the long listing for the directory itself (not contents)
+        # awk pulls field 1 (permissions), field 3 (owner), field 4 (group)
+        PERMS=$(ls -ld "$DIR" | awk '{print $1, $3, $4}')
+
+        # du -sh gets human-readable size, 2>/dev/null suppresses errors
+        # cut -f1 extracts just the size (first tab-separated field)
+        SIZE=$(du -sh "$DIR" 2>/dev/null | cut -f1)
+
+        printf "%-22s %-28s %-8s\n" "$DIR" "$PERMS" "${SIZE:-N/A}"
+
+    else
+        printf "%-22s %s\n" "$DIR" "[does not exist on this system]"
+    fi
+
+done
+
+echo ""
+echo "------------------------------------------------------------"
+echo "       GIT-SPECIFIC DIRECTORY AUDIT                        "
+echo "------------------------------------------------------------"
+echo ""
+
+# --- Array of Git-related directories and files to audit ---
+GIT_PATHS=(
+    "/usr/bin/git"
+    "/usr/lib/git-core"
+    "/usr/share/git-core"
+    "/etc/gitconfig"
+    "$HOME/.gitconfig"
+    "$HOME/.git-credentials"
+)
+
+echo "  Git installation paths:"
+echo ""
+
+for GPATH in "${GIT_PATHS[@]}"; do
+
+    # Check if it's a file or directory and handle both
+    if [ -f "$GPATH" ]; then
+        GPERMS=$(ls -l "$GPATH" | awk '{print $1, $3, $4}')
+        GSIZE=$(du -sh "$GPATH" 2>/dev/null | cut -f1)
+        echo "  [FILE] $GPATH"
+        echo "         Permissions : $GPERMS | Size: ${GSIZE:-N/A}"
+        echo ""
+
+    elif [ -d "$GPATH" ]; then
+        GPERMS=$(ls -ld "$GPATH" | awk '{print $1, $3, $4}')
+        GSIZE=$(du -sh "$GPATH" 2>/dev/null | cut -f1)
+        echo "  [DIR]  $GPATH"
+        echo "         Permissions : $GPERMS | Size: ${GSIZE:-N/A}"
+        echo ""
+
+    else
+        echo "  [----] $GPATH — not found on this system"
+        echo ""
+    fi
+
+done
+
+echo "------------------------------------------------------------"
+echo "       GIT VERSION AND BINARY INFO                         "
+echo "------------------------------------------------------------"
+echo ""
+
+# Show Git version if installed
+if command -v git &>/dev/null; then
+    echo "  Git Binary   : $(which git)"
+    echo "  Git Version  : $(git --version)"
+    echo ""
+
+    # Count how many git sub-commands are available
+    GIT_CMDS=$(git help -a 2>/dev/null | grep "^   " | wc -l)
+    echo "  Available git sub-commands: approximately $GIT_CMDS"
+else
+    echo "  Git is not installed on this system."
+fi
+
+echo ""
+echo "============================================================"
+echo "  End of Disk and Permission Auditor"
+echo "============================================================"
