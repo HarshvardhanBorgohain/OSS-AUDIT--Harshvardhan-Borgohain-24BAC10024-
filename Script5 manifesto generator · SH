@@ -1,0 +1,138 @@
+#!/bin/bash
+# =============================================================================
+# Script 5: Open Source Manifesto Generator
+# Author: [Your Name] | Roll: [Your Roll Number]
+# Course: Open Source Software (NGMC) | OSS Capstone Project
+# Software Audited: Git
+# Description: Asks the user 3 questions interactively and generates a
+#              personalised open source manifesto saved to a .txt file.
+# =============================================================================
+
+# --- Alias concept demonstrated via a reusable shell function ---
+# In a live shell session you would write: alias today='date +"%d %B %Y"'
+# Here we define a function that works the same way (reusable, named shortcut):
+get_today() {
+    date '+%d %B %Y'      # e.g. 24 March 2026
+}
+
+get_time() {
+    date '+%H:%M:%S'      # e.g. 14:32:10
+}
+
+# --- Output file named after the current Linux user ---
+OUTPUT="manifesto_$(whoami).txt"
+
+# --- Welcome banner ---
+echo "============================================================"
+echo "        OPEN SOURCE MANIFESTO GENERATOR                    "
+echo "           Software Audited: Git                           "
+echo "============================================================"
+echo ""
+echo "  Git was created because proprietary software failed"
+echo "  the open source community. Now it's time to write"
+echo "  YOUR open source philosophy."
+echo ""
+echo "  Answer three questions below:"
+echo ""
+echo "------------------------------------------------------------"
+echo ""
+
+# --- Read user input interactively using 'read -p' ---
+read -p "  1. Name one open-source tool you use every day: " TOOL
+echo ""
+
+read -p "  2. In one word, what does 'freedom' mean to you?  " FREEDOM
+echo ""
+
+read -p "  3. Name one thing you would build and share freely: " BUILD
+echo ""
+
+# --- Validate: replace empty answers with sensible defaults ---
+if [ -z "$TOOL" ]; then
+    TOOL="Git"
+fi
+
+if [ -z "$FREEDOM" ]; then
+    FREEDOM="choice"
+fi
+
+if [ -z "$BUILD" ]; then
+    BUILD="a tool that helps other students learn"
+fi
+
+# --- Get current date/time and user info via command substitution ---
+DATE=$(get_today)
+TIME=$(get_time)
+AUTHOR=$(whoami)
+GIT_VER=$(git --version 2>/dev/null || echo "Git")
+
+echo ""
+echo "  Generating your manifesto..."
+echo ""
+
+# --- Write the manifesto file using > (create) and >> (append) ---
+
+# Create the file and write the header (> overwrites any existing file)
+echo "============================================================" > "$OUTPUT"
+echo "            MY OPEN SOURCE MANIFESTO                       " >> "$OUTPUT"
+echo "============================================================" >> "$OUTPUT"
+echo "" >> "$OUTPUT"
+echo "  Author    : $AUTHOR"                                       >> "$OUTPUT"
+echo "  Date      : $DATE at $TIME"                                >> "$OUTPUT"
+echo "  Tool used : $GIT_VER"                                      >> "$OUTPUT"
+echo "" >> "$OUTPUT"
+echo "------------------------------------------------------------" >> "$OUTPUT"
+echo "" >> "$OUTPUT"
+
+# --- Build the manifesto paragraphs using string concatenation (+=) ---
+
+# Paragraph 1: about the tool you use
+PARA1="Every day, I use $TOOL — a piece of software built not for profit,"
+PARA1+=" but for the freedom of every person who uses it. The act of"
+PARA1+=" making that tool free and open was not an accident. It was a"
+PARA1+=" deliberate choice made by people who believed that knowledge"
+PARA1+=" and tools should be available to everyone, not locked away."
+
+# Paragraph 2: about Git and its origin
+PARA2="Git itself is the perfect example of this philosophy. In 2005,"
+PARA2+=" Linus Torvalds was denied continued free use of BitKeeper, a"
+PARA2+=" proprietary version control tool. Instead of paying or giving up,"
+PARA2+=" he spent 10 days building Git from scratch and released it under"
+PARA2+=" the GPLv2 license — completely free, forever. To me, freedom"
+PARA2+=" means $FREEDOM, and Git embodies that completely."
+
+# Paragraph 3: what you would build
+PARA3="One day, I want to build $BUILD and release it freely for anyone"
+PARA3+=" to use, study, and improve. I understand now that open source"
+PARA3+=" is not just about free software — it is about standing on the"
+PARA3+=" shoulders of giants and then reaching down to help the next"
+PARA3+=" person climb. Git has millions of contributors. My work can be"
+PARA3+=" part of that same story, however small my contribution may be."
+
+# Closing line
+CLOSING="I commit to writing code that others can read, sharing knowledge"
+CLOSING+=" that others can use, and building tools that outlast my own"
+CLOSING+=" use of them. That is the open source way."
+
+# --- Write paragraphs to the file using >> (append) ---
+echo "$PARA1"  >> "$OUTPUT"
+echo ""        >> "$OUTPUT"
+echo "$PARA2"  >> "$OUTPUT"
+echo ""        >> "$OUTPUT"
+echo "$PARA3"  >> "$OUTPUT"
+echo ""        >> "$OUTPUT"
+echo "$CLOSING" >> "$OUTPUT"
+echo ""        >> "$OUTPUT"
+echo "------------------------------------------------------------" >> "$OUTPUT"
+echo "  Software Audited : Git (GPLv2)"                           >> "$OUTPUT"
+echo "  Course           : Open Source Software — NGMC"           >> "$OUTPUT"
+echo "============================================================" >> "$OUTPUT"
+
+# --- Confirm and display the saved manifesto ---
+echo "------------------------------------------------------------"
+echo "  Manifesto saved to: $OUTPUT"
+echo "------------------------------------------------------------"
+echo ""
+
+# Display the file using cat
+cat "$OUTPUT"
