@@ -1,7 +1,7 @@
 #!/bin/bash
 # =============================================================================
 # Script 3: Disk and Permission Auditor
-# Author: [Your Name] | Roll: [Your Roll Number]
+# Author: Harshvardhan Borgohain | Roll: 24BAC10024
 # Course: Open Source Software (NGMC) | OSS Capstone Project
 # Software Audited: Git
 # Description: Loops through key Linux directories and reports permissions,
