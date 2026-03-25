@@ -1,15 +1,15 @@
 #!/bin/bash
 # =============================================================================
 # Script 1: System Identity Report
-# Author: [Your Name] | Roll: [Your Roll Number]
+# Author: Harshvardhan Borgohain | Roll: 24BAC10024
 # Course: Open Source Software (NGMC) | OSS Capstone Project
 # Software Audited: Git
 # Description: Displays a welcome screen with system info and Git license details
 # =============================================================================
 
 # --- Student Info Variables ---
-STUDENT_NAME="[Your Name]"         # Replace with your name
-ROLL_NUMBER="[Your Roll Number]"   # Replace with your roll number
+STUDENT_NAME="Harshvardhan Borgohain"        
+ROLL_NUMBER="24BAC10024"   
 SOFTWARE_CHOICE="Git"
 
 # --- Gather System Information using command substitution $() ---
