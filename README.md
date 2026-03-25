@@ -23,7 +23,7 @@ This repository contains the five shell scripts for the **Open Source Audit** ca
 ## Repository Structure
 
 ```
-oss-audit--Harshvardhan-Borgohain-24BAC10024/
+OSS-AUDIT--Harshvardhan-Borgohain-24BAC10024/
 │
 ├── script1_system_identity.sh       # System Identity Report
 ├── script2_package_inspector.sh     # FOSS Package Inspector
