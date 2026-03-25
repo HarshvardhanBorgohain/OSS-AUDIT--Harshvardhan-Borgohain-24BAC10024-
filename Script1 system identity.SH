@@ -8,9 +8,9 @@
 # =============================================================================
 
 # --- Student Info Variables ---
-STUDENT_NAME="[Harshvardhan Borgohain]"        
-ROLL_NUMBER="[24BAC10024]"   
-SOFTWARE_CHOICE="Git"
+STUDENT_NAME = "Harshvardhan Borgohain"        
+ROLL_NUMBER = [24BAC10024]   
+SOFTWARE_CHOICE = "Git"
 
 # --- Gather System Information using command substitution $() ---
 DISTRO=$(cat /etc/os-release | grep -w "PRETTY_NAME" | cut -d= -f2 | tr -d '"')
