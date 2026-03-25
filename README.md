@@ -6,7 +6,7 @@ Open Source Audit of Git - analysis of its philosophy, license, Linux footprint,
 
 ---
 
-**Student Name:** [Harshvardhan Borgohain]  
+**Student Name:** Harshvardhan Borgohain  
 **Roll Number:** [24BAC10024]  
 **Software Audited:** Git  
 **License:** GNU General Public License v2 (GPLv2)  
@@ -81,8 +81,8 @@ Interactively asks the user three questions about open source philosophy and gen
 ### Step 1 — Clone the Repository
 
 ```bash
-git clone https://github.com/[your-github-username]/oss-audit-[rollnumber].git
-cd oss-audit-[rollnumber]
+git clone https://github.com/HarshvardhanBorgohain/oss-audit-24BAC10024.git
+cd oss-audit-24BAC10024
 ```
 
 ### Step 2 — Make Scripts Executable
