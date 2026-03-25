@@ -1,0 +1,127 @@
+#!/bin/bash
+# =============================================================================
+# Script 2: FOSS Package Inspector
+# Author: [Your Name] | Roll: [Your Roll Number]
+# Course: Open Source Software (NGMC) | OSS Capstone Project
+# Software Audited: Git
+# Description: Checks if Git is installed, shows its details, and prints
+#              a philosophy note using a case statement.
+# =============================================================================
+
+# --- The package to inspect ---
+PACKAGE="git"
+
+# --- Detect package manager (apt for Debian/Ubuntu, rpm for RHEL/Fedora) ---
+if command -v apt &>/dev/null; then
+    PKG_MANAGER="apt"
+elif command -v rpm &>/dev/null; then
+    PKG_MANAGER="rpm"
+else
+    PKG_MANAGER="unknown"
+fi
+
+echo "============================================================"
+echo "              FOSS PACKAGE INSPECTOR                       "
+echo "           Software Audited: Git                           "
+echo "============================================================"
+echo ""
+echo "  Package to inspect : $PACKAGE"
+echo "  Package manager    : $PKG_MANAGER"
+echo ""
+echo "------------------------------------------------------------"
+
+# --- Check if Git is installed using if-then-else ---
+if command -v git &>/dev/null; then
+    echo "  STATUS: $PACKAGE is INSTALLED on this system."
+    echo ""
+    echo "  Git Details:"
+    echo "  Version : $(git --version)"
+    echo "  Path    : $(which git)"
+    echo ""
+
+    # Get more package details based on package manager
+    if [ "$PKG_MANAGER" = "apt" ]; then
+        # Use pipe with grep to filter relevant fields from dpkg output
+        echo "  Package metadata (via dpkg):"
+        dpkg -l git 2>/dev/null | grep "^ii" | \
+            awk '{print "  Installed version : " $3}'
+        apt-cache show git 2>/dev/null | grep -E "^(Maintainer|Homepage):" | \
+            awk '{print "  " $0}'
+
+    elif [ "$PKG_MANAGER" = "rpm" ]; then
+        # Use rpm -qi with pipe + grep to extract fields
+        echo "  Package metadata (via rpm):"
+        rpm -qi git 2>/dev/null | grep -E "^(Version|License|URL|Summary)" | \
+            awk '{print "  " $0}'
+    fi
+
+else
+    echo "  STATUS: $PACKAGE is NOT installed on this system."
+    echo ""
+    echo "  To install Git, run one of the following:"
+    echo "    Ubuntu/Debian : sudo apt install git"
+    echo "    Fedora/RHEL   : sudo dnf install git"
+    echo "    Arch Linux    : sudo pacman -S git"
+fi
+
+echo ""
+echo "------------------------------------------------------------"
+echo "  GIT CONFIGURATION (from ~/.gitconfig if it exists):"
+echo "------------------------------------------------------------"
+echo ""
+
+# Check if global git config exists and show user info
+if [ -f "$HOME/.gitconfig" ]; then
+    GIT_USER=$(git config --global user.name 2>/dev/null || echo "Not set")
+    GIT_EMAIL=$(git config --global user.email 2>/dev/null || echo "Not set")
+    echo "  Configured User  : $GIT_USER"
+    echo "  Configured Email : $GIT_EMAIL"
+else
+    echo "  No global .gitconfig found."
+    echo "  Set it up with:"
+    echo "    git config --global user.name 'Your Name'"
+    echo "    git config --global user.email 'you@example.com'"
+fi
+
+echo ""
+echo "------------------------------------------------------------"
+echo "  OSS PHILOSOPHY NOTE (via case statement):"
+echo "------------------------------------------------------------"
+echo ""
+
+# --- Case statement: print a philosophy note based on the package name ---
+case "$PACKAGE" in
+    git)
+        echo "  Git — Created by Linus Torvalds in April 2005 in just"
+        echo "  10 days, after BitKeeper (a proprietary tool) withdrew"
+        echo "  its free license from the Linux kernel team."
+        echo ""
+        echo "  This is open source philosophy in action: when a"
+        echo "  proprietary tool fails the community, the community"
+        echo "  builds something better — and gives it away for free."
+        ;;
+    httpd | apache2)
+        echo "  Apache: the web server that built the open internet."
+        ;;
+    mysql | mariadb)
+        echo "  MySQL: open source at the heart of millions of apps."
+        ;;
+    vlc)
+        echo "  VLC: built by students in Paris to stream video freely."
+        ;;
+    firefox)
+        echo "  Firefox: a nonprofit browser fighting for the open web."
+        ;;
+    python3 | python)
+        echo "  Python: a language shaped entirely by its community."
+        ;;
+    *)
+        echo "  '$PACKAGE' is part of the vast open source ecosystem"
+        echo "  that powers the modern world."
+        ;;
+esac
+
+echo ""
+echo "============================================================"
+echo "  End of FOSS Package Inspector"
+echo "============================================================"
