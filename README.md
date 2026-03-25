@@ -7,7 +7,7 @@ Open Source Audit of Git - analysis of its philosophy, license, Linux footprint,
 ---
 
 **Student Name:** Harshvardhan Borgohain  
-**Roll Number:** [24BAC10024]  
+**Roll Number:** [ 24BAC10024 ]  
 **Software Audited:** Git  
 **License:** GNU General Public License v2 (GPLv2)  
 **Submission Deadline:** 31 March 2026
