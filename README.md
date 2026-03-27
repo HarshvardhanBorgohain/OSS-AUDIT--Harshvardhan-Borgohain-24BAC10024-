@@ -25,6 +25,7 @@ This repository contains the five shell scripts for the **Open Source Audit** ca
 ```
 OSS-AUDIT--Harshvardhan-Borgohain-24BAC10024/
 │
+├── Screenshots                      # All execution ss are here
 ├── script1_system_identity.sh       # System Identity Report
 ├── script2_package_inspector.sh     # FOSS Package Inspector
 ├── script3_disk_auditor.sh          # Disk and Permission Auditor
